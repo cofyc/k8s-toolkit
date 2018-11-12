@@ -1,0 +1,3 @@
+#!/bin/bash
+
+kubelet --version
