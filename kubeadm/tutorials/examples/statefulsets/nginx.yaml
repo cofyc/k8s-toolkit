@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  namespace: default
+  name: nginx
+spec:
+  selector:
+    matchLabels:
+      app: nginx 
+  serviceName: "nginx"
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.15.4
+        ports:
+        - containerPort: 80
+      tolerations:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/master 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  ports:
+  - port: 80
+    name: web
+  clusterIP: None
+  selector:
+    app: nginx

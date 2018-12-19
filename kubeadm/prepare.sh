@@ -22,3 +22,7 @@ EOF
 setenforce 0
 yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
 systemctl enable kubelet 
+
+# set up bash-completion
+yum install bash-completion -y
+kubectl completion bash  > /etc/bash_completion.d/kubectl
