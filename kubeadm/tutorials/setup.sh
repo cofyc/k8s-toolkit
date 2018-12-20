@@ -23,7 +23,7 @@ for i in $(seq 1 10); do
     echo "$user:$password" | chpasswd
 
     # examples
-    rsync -av examples/ /home/$user/examples
+    rsync -av examples/ /home/$user/examples --delete
     chown -R $user:$group /home/$user/examples
     find /home/$user/examples -name '*.yaml' | xargs sed -i "s#namespace: default#namespace: $user#g"
     sed -i "s/name: default/name: $user/g" /home/$user/examples/ns.yaml

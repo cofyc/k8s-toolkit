@@ -1,0 +1,20 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: test-pod
+spec:
+  containers:
+  - name: test-pod
+    image: ubuntu:latest
+    command:
+    - "/bin/bash"
+    args:
+    - "-c"
+    - "trap 'exit' TERM; while true; do sleep 1; done"
+    volumeMounts:
+    - name: local
+      mountPath: "/data"
+  volumes:
+  - name: local
+    persistentVolumeClaim:
+      claimName: claim
