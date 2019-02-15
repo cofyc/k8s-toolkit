@@ -31,6 +31,7 @@ while getopts "h?f:" opt; do
 done
 
 shift $((OPTIND-1))
+[ "$1" == "--" ] && shift
 
 hostpattern=$1
 script=$ROOT/$2
