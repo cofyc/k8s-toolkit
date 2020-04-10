@@ -22,3 +22,10 @@ kubeadm init phase certs apiserver-kubelet-client -v 4 \
 
 kubeadm init phase certs front-proxy-client -v 4 \
     --cert-dir "$CONTROL_PLANE_SSL_DIR"
+
+for p in kube-apiserver; do
+    ps -C $p -o pid,args
+    pkill -f $p
+    sleep 5
+    ps -C $p -o pid,args
+done
