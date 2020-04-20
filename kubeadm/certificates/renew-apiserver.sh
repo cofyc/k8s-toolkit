@@ -5,8 +5,15 @@ cd $ROOT
 
 source ./init.sh
 
-SERVICE_CIDR="10.233.0.0/18"
-APISERVER_CERT_EXTRA_SANS="172.16.4.2,172.16.4.3,172.16.4.4,127.0.0.1" # UPDATE THIS!!!
+echo "CERT_DIR: $CERT_DIR"
+echo "SERVICE_CIDR: $SERVICE_CIDR"
+echo "APISERVER_CERT_EXTRA_SANS: $APISERVER_CERT_EXTRA_SANS"
+
+read -r -p "Are you sure? [y/N] " response
+if [[ ! $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
+   echo "Exit."
+   exit 0
+fi
 
 mv $CERT_DIR/apiserver.key $CERT_DIR/apiserver.key.old
 mv $CERT_DIR/apiserver.crt $CERT_DIR/apiserver.crt.old
