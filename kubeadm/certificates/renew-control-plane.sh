@@ -10,11 +10,11 @@ mv /etc/kubernetes/scheduler.conf /etc/kubernetes/scheduler.conf.old
 mv /etc/kubernetes/admin.conf /etc/kubernetes/admin.conf.old
 
 kubeadm init phase kubeconfig admin \
-    --cert-dir $CONTROL_PLANE_SSL_DIR
+    --cert-dir $CERT_DIR
 kubeadm init phase kubeconfig controller-manager \
-    --cert-dir $CONTROL_PLANE_SSL_DIR
+    --cert-dir $CERT_DIR
 kubeadm init phase kubeconfig scheduler \
-    --cert-dir $CONTROL_PLANE_SSL_DIR
+    --cert-dir $CERT_DIR
 
 for p in kube-controller-manager kube-scheduler; do
     ps -C $p -o pid,args

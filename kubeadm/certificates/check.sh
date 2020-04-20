@@ -1,18 +1,15 @@
 #!/bin/bash
 
-ROOT=$(unset CDPATH && cd $(dirname "${BASH_SOURCE[0]}")/.. && pwd)
+ROOT=$(unset CDPATH && cd $(dirname "${BASH_SOURCE[0]}") && pwd)
 cd $ROOT
 
 source ./init.sh
 
-echo | openssl s_client -servername ${APISERVER_ADDRESS} -connect ${APISERVER_ADDRESS}:6443 2>/dev/null | openssl x509 -text -noout
-
-for i in $(find $CONTROL_PLANE_SSL_DIR -name '*.crt'); do
+for i in $(find $CERT_DIR -name '*.crt' -o -name '*.pem'); do
     echo $i
     openssl x509 -enddate -in $i -noout
 done
-
-for i in $(find $ETCD_SSL_DIR -name '*.pem'); do
-    echo $i
-    openssl x509 -enddate -in $i -noout
+for f in $(ls /etc/kubernetes/{admin,controller-manager,scheduler}.conf); do
+    echo $f
+    kubectl --kubeconfig $f config view --raw -o jsonpath='{range .users[*]}{.user.client-certificate-data}{end}' | base64 -d | openssl x509 -enddate -noout
 done
