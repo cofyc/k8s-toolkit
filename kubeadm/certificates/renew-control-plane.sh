@@ -1,6 +1,9 @@
 #!/bin/bash
 
-CONTROL_PLANE_SSL_DIR=${CONTROL_PLANE_SSL_DIR:-/etc/kubernetes/pki}
+ROOT=$(unset CDPATH && cd $(dirname "${BASH_SOURCE[0]}") && pwd)
+cd $ROOT
+
+source ./init.sh
 
 mv /etc/kubernetes/controller-manager.conf /etc/kubernetes/controller-manager.conf.old
 mv /etc/kubernetes/scheduler.conf /etc/kubernetes/scheduler.conf.old

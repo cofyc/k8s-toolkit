@@ -1,8 +1,9 @@
 #!/bin/bash
 
-APISERVER_ADDRESS=${APISERVER_ADDRESS:-}
-CONTROL_PLANE_SSL_DIR=${CONTROL_PLANE_SSL_DIR:-/etc/kubernetes/pki}
-ETCD_SSL_DIR=${ETCD_SSL_DIR:-$CONTROL_PLANE_SSL_DIR/etcd}
+ROOT=$(unset CDPATH && cd $(dirname "${BASH_SOURCE[0]}")/.. && pwd)
+cd $ROOT
+
+source ./init.sh
 
 echo | openssl s_client -servername ${APISERVER_ADDRESS} -connect ${APISERVER_ADDRESS}:6443 2>/dev/null | openssl x509 -text -noout
 
