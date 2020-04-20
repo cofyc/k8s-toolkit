@@ -15,9 +15,10 @@ mv $CERT_DIR/apiserver-kubelet-client.key $CERT_DIR/apiserver-kubelet-client.key
 mv $CERT_DIR/front-proxy-client.crt $CERT_DIR/front-proxy-client.crt.old
 mv $CERT_DIR/front-proxy-client.key $CERT_DIR/front-proxy-client.key.old
 
-kubeadm init phase certs apiserver \
-    --apiserver-cert-extra-sans $APISERVER_CERT_EXTRA_SANS \
-    --service-cidr $SERVICE_CIDR --service-dns-domain cluster.local -v 4 \
+kubeadm init phase certs apiserver -v 4\
+    --apiserver-cert-extra-sans "$APISERVER_CERT_EXTRA_SANS" \
+    --service-cidr "$SERVICE_CIDR" \
+    --service-dns-domain "$CLUSTER_DOMAIN" \
     --cert-dir "$CERT_DIR"
 
 kubeadm init phase certs apiserver-kubelet-client -v 4 \
