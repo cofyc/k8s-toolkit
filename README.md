@@ -32,3 +32,7 @@ check:
 ```
 kubectl -n kube-system get pods -l tier=control-plane -o wide
 ```
+
+## SSH into a node via kubectl
+
+See https://github.com/luksa/kubectl-plugins#kubectl-ssh-node
